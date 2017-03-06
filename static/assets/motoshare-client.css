@@ -1,0 +1,181 @@
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: 0;
+}
+.site {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.indexBG {
+	background: url('/assets/images/indexBG.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.loginBG {
+	background: url('/assets/images/loginBG.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.mobileloginBG {
+  background: url('/assets/images/mobileBG.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.registerBG {
+	background: url('/assets/images/registerBG.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.resetBG {
+  background: url('/assets/images/resetBG.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.content {
+  display: flex;
+  display:-webkit-flex;
+  flex:1 1 auto;
+  flex-direction: column;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.btn-white-outline { 
+  color: #fff; 
+  background-color: #000; 
+  border-color: #000; 
+} 
+ 
+.btn-white-outline:hover, 
+.btn-white-outline:focus, 
+.btn-white-outline:active, 
+.btn-white-outline.active, 
+.open .dropdown-toggle.btn-white-outline { 
+  color: #ffffff; 
+  background-color: #232323; 
+  border-color: #000; 
+} 
+ 
+.btn-white-outline:active, 
+.btn-white-outline.active, 
+.open .dropdown-toggle.btn-white-outline { 
+  background-image: none; 
+} 
+ 
+.btn-white-outline.disabled, 
+.btn-white-outline[disabled], 
+fieldset[disabled] .btn-white-outline, 
+.btn-white-outline.disabled:hover, 
+.btn-white-outline[disabled]:hover, 
+fieldset[disabled] .btn-white-outline:hover, 
+.btn-white-outline.disabled:focus, 
+.btn-white-outline[disabled]:focus, 
+fieldset[disabled] .btn-white-outline:focus, 
+.btn-white-outline.disabled:active, 
+.btn-white-outline[disabled]:active, 
+fieldset[disabled] .btn-white-outline:active, 
+.btn-white-outline.disabled.active, 
+.btn-white-outline[disabled].active, 
+fieldset[disabled] .btn-white-outline.active { 
+  background-color: #232323;/* rgba(0, 0, 0, 0.1);*/
+  border-color: #FFFFFF; 
+} 
+ 
+.btn-white-outline .badge { 
+  color: #5414A8; 
+  background-color: #ffffff; 
+}
+.buttonrow{
+  margin-top: 30px;
+}
+.buttonspacer{
+  margin-right: 50px;
+}
+.btn-customlogin {
+  background-color: #000;
+  border-color: #000;
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.btn-customlogin:hover,
+.btn-customlogin:focus,
+.btn-customlogin:active,
+.btn-customlogin.active {
+  background-color: #424242;
+  border-color: #ffb938;
+  color: #ffb938;
+  outline: 0;
+}
+/* Login Form */
+.login-form {
+    color: #5d5d5d;
+    background: #f2f2f2;
+    width: 500px;
+    padding: 26px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    text-align: center;
+}
+.login-form input {
+    font-size: 18px;
+    margin: 5px 0;
+}
+.login-form .div {
+  text-align: center;
+}
+
+.login-form img {
+    display: block;
+    margin: 0 auto;
+}
+.login-form a {
+	color: #000;
+}
+.map-canvas{
+    height: 95vh;
+  }
+/*Main Navigation*/
+.navbar{
+  margin-bottom: 0px;
+}
+.navbar-brand{
+  padding-top: 2px;
+}
+/* Mobile Navigation */
+.login-form-mobile {
+  margin-top: 25%;
+    color: #5d5d5d;
+    padding: 6px;
+}
+.login-form-mobile input {
+    font-size: 18px;
+    margin: 5px 0;
+}
+.login-form-mobile .div {
+  text-align: center;
+}
+
+.login-form-mobile img {
+    display: block;
+    margin: 0 auto;
+}
+.login-form-mobile a {
+  color: #fff;
+}
+.login-form-mobile h4{
+  color: #fff;
+}
