@@ -6,6 +6,7 @@ def caller():
     return inspect.getouterframes(inspect.currentframe())[2][1:4]
 # Motorcycle Model
 class Motorcycle(ndb.Model):
+    user = ndb.KeyProperty(kind=User)
     year = ndb.IntegerProperty(required=False)
     make = ndb.StringProperty(required=False)
     model = ndb.StringProperty(required=False)
@@ -16,6 +17,7 @@ class Motorcycle(ndb.Model):
     mileage = ndb.IntegerProperty(required=False)
     description = ndb.TextProperty(required=False)
     media = ndb.JsonProperty(default=[])
+    availabledates = ndb.JsonProperty(default=[])
     location = ndb.GeoPtProperty(required=False)
     isCompleted = ndb.BooleanProperty(default=False)
 

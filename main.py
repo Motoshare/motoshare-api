@@ -108,6 +108,52 @@ def motorcycle(bike_id):
 		data = json.load(motorcycle_list)
 	return jsonify(data)
 
+@app.route('/api/motorcycles/', methods=['POST', 'OPTIONS'])
+@jwt_required
+def create_motorcycle():
+	motorcycle = Motorcycle()
+	json = request.json
+	#Insert User key 
+	if 'year' in json:
+		motorcycle.year = json['year']
+	else:
+		pass
+	if 'make' in json:
+		motorcycle.make = json['make']
+	else:
+		pass
+	if 'model' in json:
+		motorcycle.model = json['model']
+	else:
+		pass
+	if 'VIN' in json: 
+		motorcycle.VIN = json['VIN']
+	else:
+		pass
+	if 'LIC' in json:
+		motorcycle.LIC = json['LIC']
+	else:
+		pass
+	if 'category' in json:
+		motorcycle.category = json['category']
+	else:
+		pass
+	if 'color' in json:
+		motorcycle.color = json['color']
+	else:
+		pass
+	if 'mileage' in json:
+		motorcycle.mileage = json['mileage']
+	else:
+		pass
+	if 'description' in json:
+		motorcycle.description = json['description']
+	else:
+		pass
+	motorcycle.put()
+	message = 'Motorcycle Saved'
+	return jsonify(message=message)
+	
 @app.route('/protected', methods=['GET'])
 @jwt_required
 def protected():
