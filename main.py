@@ -1,7 +1,9 @@
 import logging
 import os
 import random, string
+from google.appengine.ext import blobstore
 from google.appengine.api import mail
+from google.appengine.ext import ndb
 from flask import Flask, jsonify, request, json, make_response, abort, render_template
 from models import User, Motorcycle
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
@@ -14,6 +16,8 @@ if '__main__' not in sys.modules:
 app = Flask(__name__)
 app.secret_key = 'm0t0sh4r32016'
 jwt = JWTManager(app)
+
+BUCKET_NAME = 'motoshare-photos'
 
 @app.after_request
 def after_request(response):
@@ -68,7 +72,7 @@ def login():
 	else:
 		return jsonify({"message": "Bad username or password"}), 401
 
-@app.route('/api/passwordreset', methods=['POST'])
+@app.route('/api/passwordreset', methods=['POST', 'OPTIONS'])
 def passwordreset():
 	sender_address = "support@motoshare-v1.appspotmail.com"
 	send_to = request.json.get('email')
@@ -94,26 +98,90 @@ def passwordreset():
 	else:
 		return "That email does not exsist. Please register."
 
-@app.route('/api/motorcycles', methods=['POST', 'GET'])
+# @app.route('/api/motorcycles', methods=['GET'])
+# def motorcycles():
+# 	filename = 'motorcycles.json'
+# 	with open(filename) as motorcycle_list:
+# 		data = json.load(motorcycle_list)
+# 	return jsonify(data)
+
+@app.route('/api/motorcycles', methods=['GET', 'OPTIONS'])
 def motorcycles():
-	filename = 'motorcycles.json'
-	with open(filename) as motorcycle_list:
-		data = json.load(motorcycle_list)
-	return jsonify(data)
+	motorcycles = Motorcycle.query()
+	json_results = []
+	for motorcycle in motorcycles:
+		lat = motorcycle.location.lat
+		longitude = motorcycle.location.lon
+		d = {'id': motorcycle.get_id(),
+			'availabledates': motorcycle.availabledates,
+			'category': motorcycle.category,
+			'color': motorcycle.color,
+			'description': motorcycle.description,
+			'isCompleted': motorcycle.isCompleted,
+			'LIC': motorcycle.LIC,
+			'VIN': motorcycle.VIN,
+			'long': lat,
+			'lat': longitude,
+			'make': motorcycle.make,
+			'media': motorcycle.media,
+			'mileage': motorcycle.mileage,
+			'model': motorcycle.model,
+			'year': motorcycle.year}
+		json_results.append(d)
+	return jsonify(motorcycles=json_results)
 
-@app.route('/api/motorcycles/<bike_id>', methods=['POST', 'GET'])
+@app.route('/api/motorcycles/<bike_id>', methods=['GET', 'OPTIONS'])
 def motorcycle(bike_id):
-	filename = 'motorcycles.json'
-	with open(filename) as motorcycle_list:
-		data = json.load(motorcycle_list)
-	return jsonify(data)
+	if request.method == 'GET':
+		motorcycle = Motorcycle.get_by_id(int(bike_id))
+		lat = motorcycle.location.lat
+		longitude = motorcycle.location.lon
+		json_results = []
+		d = {'id': motorcycle.get_id(),
+				'availabledates': motorcycle.availabledates,
+				'category': motorcycle.category,
+				'color': motorcycle.color,
+				'description': motorcycle.description,
+				'isCompleted': motorcycle.isCompleted,
+				'LIC': motorcycle.LIC,
+				'VIN': motorcycle.VIN,
+				'lat': lat,
+				'long': longitude,
+				'make': motorcycle.make,
+				'media': motorcycle.media,
+				'mileage': motorcycle.mileage,
+				'model': motorcycle.model,
+				'year': motorcycle.year}
+		json_results.append(d)
+	return jsonify(motorcycle=json_results)
 
-@app.route('/api/motorcycles/', methods=['POST', 'OPTIONS'])
+@app.route('/api/motorcycles/<bike_id>', methods=['POST', 'OPTIONS'])
+@jwt_required
+def update_motorcycle(bike_id):
+	motorcycle = Motorcycle.get_by_id(int(bike_id))
+	json = request.json
+	for k, value in json.items():
+		setattr(motorcycle, k, value) 
+	motorcycle.put()
+	return 'Success'
+
+
+@app.route('/api/motorcycles', methods=['POST', 'OPTIONS'])
 @jwt_required
 def create_motorcycle():
+	current_user = get_jwt_identity()
+	user = User.query(User.email == current_user).get()
+	uid = user.key.id()
+	key = ndb.Key(User, uid)
 	motorcycle = Motorcycle()
 	json = request.json
-	#Insert User key 
+	motorcycle.user = key
+	if 'lat' in json:
+		lat = json['lat']
+		longitude = json['long']
+		motorcycle.location = ndb.GeoPt(lat, longitude)
+	else:
+		pass
 	if 'year' in json:
 		motorcycle.year = json['year']
 	else:
@@ -151,10 +219,62 @@ def create_motorcycle():
 	else:
 		pass
 	motorcycle.put()
-	message = 'Motorcycle Saved'
+	key = motorcycle.key.id()
+	message = { 'motorcycleid' : key }
 	return jsonify(message=message)
-	
-@app.route('/protected', methods=['GET'])
+
+@app.route('/api/photo/upload', methods = ['POST', 'GET'])
+def upload_photo():
+    uploadUri = blobstore.create_upload_url('/api/photo/submit', gs_bucket_name=BUCKET_NAME)
+    #return render_template('upload.html', uploadUri=uploadUri)
+    return make_response(jsonify({'message': uploadUri}))
+
+@app.route('/api/photo/submit', methods = ['POST'])
+#@jwt_required
+def submit_photo():
+	data = request.get_data(as_text=True)
+	start = "/gs/"
+	end = "Content-MD5"
+	link = data[data.find(start)+len(start):data.rfind(end)]
+	temp_url = link.splitlines()
+	bkey = "".join(temp_url)
+	blob_key = bkey.replace('=','')
+	json = request.json
+	key = request.form['motorcycleid']
+	motorcycle = Motorcycle.get_by_id(int(key))
+	url = "https://storage.googleapis.com/"+blob_key
+	motorcycle.media.append(url)
+	motorcycle.put()
+	message = 'Success'
+	return jsonify(message=message)
+
+@app.route('/api/mymotorcycles/<uid>', methods = ['GET', 'OPTIONS'])
+def my_motorcycles(uid):
+	user = User.get_by_id(int(uid))
+	motorcycles = Motorcycle.query(Motorcycle.user == user.key).fetch()
+	json_results = []
+	for motorcycle in motorcycles:
+		lat = motorcycle.location.lat
+		longitude = motorcycle.location.lon
+		d = {'id': motorcycle.get_id(),
+			'availabledates': motorcycle.availabledates,
+			'category': motorcycle.category,
+			'color': motorcycle.color,
+			'description': motorcycle.description,
+			'isCompleted': motorcycle.isCompleted,
+			'LIC': motorcycle.LIC,
+			'VIN': motorcycle.VIN,
+			'lat': lat,
+			'long': longitude,
+			'media': motorcycle.media,
+			'mileage': motorcycle.mileage,
+			'make': motorcycle.make,
+			'model': motorcycle.model,
+			'year': motorcycle.year}
+		json_results.append(d)
+	return jsonify(mymotorcycles=json_results)
+
+@app.route('/api/protected', methods=['GET', 'OPTIONS'])
 @jwt_required
 def protected():
     # Access the identity of the current user with get_jwt_identity
