@@ -22,7 +22,7 @@ class User(ndb.Model):
 
     def put(self):
         path = os.path.join(os.path.dirname(__file__), 'main.py')
-        if User.gql('WHERE email = :1', self.email).count() > 0 and caller() != (path, 80, 'passwordreset'):
+        if User.gql('WHERE email = :1', self.email).count() > 0 and caller() != (path, 86, 'passwordreset'):
             raise UniqueConstraintViolation("email", self.email)
         ndb.Model.put(self)
 
@@ -63,6 +63,7 @@ class Motorcycle(ndb.Model):
     availabledates = ndb.JsonProperty(default=[])
     location = ndb.GeoPtProperty(required=False)
     isCompleted = ndb.BooleanProperty(default=False)
+    price = ndb.IntegerProperty(required=False)
 
     def add_image(self, value):
         if self.media:
@@ -71,4 +72,17 @@ class Motorcycle(ndb.Model):
             self.media = [value]
 
     def get_id(self):
+        return self.key.id()
+
+class Rental(ndb.Model):
+    owner = ndb.KeyProperty(kind=User)
+    renter = ndb.KeyProperty(kind=User)
+    motorcycle = ndb.KeyProperty(kind=Motorcycle)
+    price = ndb.IntegerProperty()
+    dates = ndb.JsonProperty(default=[])
+    isApproved = ndb.BooleanProperty(default=False)
+    isPaid = ndb.BooleanProperty(default=False)
+    isComplete = ndb.BooleanProperty(default=False)
+
+    def get_id (self):
         return self.key.id()

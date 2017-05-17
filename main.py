@@ -5,13 +5,15 @@ from google.appengine.ext import blobstore
 from google.appengine.api import mail
 from google.appengine.ext import ndb
 from flask import Flask, jsonify, request, json, make_response, abort, render_template
-from models import User, Motorcycle
+from models import User, Motorcycle, Rental
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
-
+import stripe
 #Some hackery to get around unique email constraint when setting a recovery password.
 import sys
 if '__main__' not in sys.modules:
     sys.modules['__main__'] = sys.modules[__name__]
+#Stripe Info 
+stripe.api_key = 'sk_test_336YZRu9JqOdtpk8zBycR5BK'
 
 app = Flask(__name__)
 app.secret_key = 'm0t0sh4r32016'
@@ -72,7 +74,7 @@ def login():
 	else:
 		return jsonify({"message": "Bad username or password"}), 401
 
-@app.route('/api/passwordreset', methods=['POST', 'OPTIONS'])
+@app.route('/api/passwordreset', methods=['POST'])
 def passwordreset():
 	sender_address = "support@motoshare-v1.appspotmail.com"
 	send_to = request.json.get('email')
@@ -105,13 +107,19 @@ def passwordreset():
 # 		data = json.load(motorcycle_list)
 # 	return jsonify(data)
 
-@app.route('/api/motorcycles', methods=['GET', 'OPTIONS'])
+@app.route('/api/motorcycles', methods=['GET'])
+#@jwt_required
 def motorcycles():
+	print(request.headers)
 	motorcycles = Motorcycle.query()
 	json_results = []
 	for motorcycle in motorcycles:
-		lat = motorcycle.location.lat
-		longitude = motorcycle.location.lon
+		if motorcycle.location:
+			lat = motorcycle.location.lat
+			longitude = motorcycle.location.lon
+		else:
+			lat = 0
+			longitude = 0
 		d = {'id': motorcycle.get_id(),
 			'availabledates': motorcycle.availabledates,
 			'category': motorcycle.category,
@@ -120,17 +128,19 @@ def motorcycles():
 			'isCompleted': motorcycle.isCompleted,
 			'LIC': motorcycle.LIC,
 			'VIN': motorcycle.VIN,
-			'long': lat,
-			'lat': longitude,
+			'long': longitude,
+			'lat': lat,
 			'make': motorcycle.make,
 			'media': motorcycle.media,
 			'mileage': motorcycle.mileage,
 			'model': motorcycle.model,
-			'year': motorcycle.year}
+			'price': motorcycle.price,
+			'year': motorcycle.year,
+			'uid': motorcycle.user.id()}
 		json_results.append(d)
 	return jsonify(motorcycles=json_results)
 
-@app.route('/api/motorcycles/<bike_id>', methods=['GET', 'OPTIONS'])
+@app.route('/api/motorcycles/<bike_id>', methods=['GET'])
 def motorcycle(bike_id):
 	if request.method == 'GET':
 		motorcycle = Motorcycle.get_by_id(int(bike_id))
@@ -151,11 +161,12 @@ def motorcycle(bike_id):
 				'media': motorcycle.media,
 				'mileage': motorcycle.mileage,
 				'model': motorcycle.model,
-				'year': motorcycle.year}
+				'year': motorcycle.year,
+				'uid': motorcycle.user.id()}
 		json_results.append(d)
 	return jsonify(motorcycle=json_results)
 
-@app.route('/api/motorcycles/<bike_id>', methods=['POST', 'OPTIONS'])
+@app.route('/api/motorcycles/<bike_id>', methods=['POST'])
 @jwt_required
 def update_motorcycle(bike_id):
 	motorcycle = Motorcycle.get_by_id(int(bike_id))
@@ -163,10 +174,26 @@ def update_motorcycle(bike_id):
 	for k, value in json.items():
 		setattr(motorcycle, k, value) 
 	motorcycle.put()
-	return 'Success'
+	json_results = []
+	d = {'id': motorcycle.get_id(),
+		'availabledates': motorcycle.availabledates,
+		'category': motorcycle.category,
+		'color': motorcycle.color,
+		'description': motorcycle.description,
+		'isCompleted': motorcycle.isCompleted,
+		'LIC': motorcycle.LIC,
+		'VIN': motorcycle.VIN,
+		'lat': lat,
+		'long': longitude,
+		'make': motorcycle.make,
+		'media': motorcycle.media,
+		'mileage': motorcycle.mileage,
+		'model': motorcycle.model,
+		'year': motorcycle.year}
+	json_results.append(d)
+	return jsonify(motorcycle=json_results)
 
-
-@app.route('/api/motorcycles', methods=['POST', 'OPTIONS'])
+@app.route('/api/motorcycles', methods=['POST'])
 @jwt_required
 def create_motorcycle():
 	current_user = get_jwt_identity()
@@ -181,7 +208,9 @@ def create_motorcycle():
 		longitude = json['long']
 		motorcycle.location = ndb.GeoPt(lat, longitude)
 	else:
-		pass
+		lat = 38.581572
+		longitude = -121.494400
+		motorcycle.location = ndb.GeoPt(lat, longitude)
 	if 'year' in json:
 		motorcycle.year = json['year']
 	else:
@@ -233,6 +262,7 @@ def upload_photo():
 #@jwt_required
 def submit_photo():
 	data = request.get_data(as_text=True)
+	print(data)
 	start = "/gs/"
 	end = "Content-MD5"
 	link = data[data.find(start)+len(start):data.rfind(end)]
@@ -249,6 +279,7 @@ def submit_photo():
 	return jsonify(message=message)
 
 @app.route('/api/mymotorcycles/<uid>', methods = ['GET', 'OPTIONS'])
+@jwt_required
 def my_motorcycles(uid):
 	user = User.get_by_id(int(uid))
 	motorcycles = Motorcycle.query(Motorcycle.user == user.key).fetch()
@@ -273,6 +304,82 @@ def my_motorcycles(uid):
 			'year': motorcycle.year}
 		json_results.append(d)
 	return jsonify(mymotorcycles=json_results)
+
+@app.route('/api/delete/<bike_id>', methods=['GET', 'POST'])
+@jwt_required
+def delete_motorcycle(bike_id):
+	motorcycle = Motorcycle.get_by_id(int(bike_id))
+	make = motorcycle.make 
+	model = motorcycle.model 
+	motorcycle.key.delete()
+	message = 'Motorcycle: %r %r has been deleted' % (make, model)
+	return jsonify(message=message)
+
+@app.route('/api/rental/<owner_id>/<motorcycle_id>/<renter_id>', methods=['GET', 'POST'])
+#jwt_required
+def rent_motorcycle(owner_id, motorcycle_id, renter_id):
+	owner = User.get_by_id(int(owner_id))
+	ownerkey = owner.key
+	motorcycle = Motorcycle.get_by_id(int(motorcycle_id))
+	motorcyclekey = motorcycle.key
+	renter = User.get_by_id(int(renter_id))
+	renterkey = renter.key
+	json = request.json
+	rental = Rental()
+	for k, value in json.items():
+		setattr(rental, k, value)
+	rental.owner = ownerkey
+	rental.motorcycle = motorcyclekey
+	rental.renter = renterkey 
+	rental.put()
+	json_results = []
+	d = {'id': rental.get_id(),
+		'dates': rental.dates,
+		'price': rental.price}
+	json_results.append(d)
+	return jsonify(rental=json_results)
+
+@app.route('/api/payment/<rental_id>', methods=['GET', 'POST', 'OPTIONS'])
+#jwt_required
+def payment(rental_id):
+	stripe.api_key = "sk_test_336YZRu9JqOdtpk8zBycR5BK"
+	token = request.form['stripeToken']
+	charge = stripe.Charge.create(
+		amount=1000,
+		currency="usd",
+		description="Example charge",
+		source=token,
+		)
+	rental = Rental.get_by_id(int(rental_id))
+	rental.isPaid = True 
+	rental.put()
+	return render_template('receipt.html')
+	#return "Where is response"
+
+@app.route('/api/addmotorcycle', methods=['GET', 'POST'])
+@jwt_required
+def addmotorcycle():
+	motorcycle = Motorcycle()
+	json = request.json
+	print(json)
+	for k, value in json.items():
+		setattr(motorcycle, k, value)
+	motorcycle.availabledates = json['availableDates']
+	owner_id = json['uid']
+	owner = User.get_by_id(int(owner_id))
+	ownerkey = owner.key
+	motorcycle.user = ownerkey
+	if 'latitude' in json:
+		lat = json['latitude']
+		longitude = json['longitude']
+		motorcycle.location = ndb.GeoPt(lat, longitude)
+	else:
+		pass
+	motorcycle.put()
+	json_results = []
+	d = {'next': motorcycle.get_id()}
+	json_results.append(d)
+	return jsonify(d)
 
 @app.route('/api/protected', methods=['GET', 'OPTIONS'])
 @jwt_required

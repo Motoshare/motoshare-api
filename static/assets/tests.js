@@ -4,7 +4,7 @@ define('motoshare-client/tests/adapters/application.jshint', ['exports'], functi
   QUnit.module('JSHint | adapters/application.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'adapters/application.js should pass jshint.');
+    assert.ok(false, 'adapters/application.js should pass jshint.\nadapters/application.js: line 3, col 8, \'DataAdapterMixin\' is defined but never used.\n\n1 error');
   });
 });
 define('motoshare-client/tests/app.jshint', ['exports'], function (exports) {
@@ -31,7 +31,7 @@ define('motoshare-client/tests/components/cycle-map.jshint', ['exports'], functi
   QUnit.module('JSHint | components/cycle-map.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/cycle-map.js should pass jshint.\ncomponents/cycle-map.js: line 7, col 13, \'cycles\' is defined but never used.\ncomponents/cycle-map.js: line 21, col 102, Missing semicolon.\ncomponents/cycle-map.js: line 22, col 26, \'google\' is not defined.\ncomponents/cycle-map.js: line 25, col 24, \'google\' is not defined.\ncomponents/cycle-map.js: line 28, col 30, \'google\' is not defined.\ncomponents/cycle-map.js: line 30, col 9, \'google\' is not defined.\ncomponents/cycle-map.js: line 51, col 9, \'google\' is not defined.\ncomponents/cycle-map.js: line 51, col 39, \'map\' is not defined.\ncomponents/cycle-map.js: line 52, col 15, \'infoWindow\' is not defined.\n\n9 errors');
+    assert.ok(false, 'components/cycle-map.js should pass jshint.\ncomponents/cycle-map.js: line 12, col 9, \'_this\' is defined but never used.\ncomponents/cycle-map.js: line 23, col 13, \'cycles\' is defined but never used.\ncomponents/cycle-map.js: line 38, col 102, Missing semicolon.\ncomponents/cycle-map.js: line 39, col 26, \'google\' is not defined.\ncomponents/cycle-map.js: line 42, col 24, \'google\' is not defined.\ncomponents/cycle-map.js: line 45, col 30, \'google\' is not defined.\ncomponents/cycle-map.js: line 47, col 9, \'google\' is not defined.\ncomponents/cycle-map.js: line 69, col 9, \'google\' is not defined.\ncomponents/cycle-map.js: line 69, col 39, \'map\' is not defined.\ncomponents/cycle-map.js: line 70, col 15, \'infoWindow\' is not defined.\ncomponents/cycle-map.js: line 2, col 8, \'hbs\' is defined but never used.\n\n11 errors');
   });
 });
 define('motoshare-client/tests/components/cycle-pin.jshint', ['exports'], function (exports) {
@@ -43,13 +43,49 @@ define('motoshare-client/tests/components/cycle-pin.jshint', ['exports'], functi
     assert.ok(true, 'components/cycle-pin.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/components/file-upload.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | components/file-upload.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'components/file-upload.js should pass jshint.\ncomponents/file-upload.js: line 13, col 9, Missing semicolon.\ncomponents/file-upload.js: line 9, col 9, \'getUrl\' is defined but never used.\ncomponents/file-upload.js: line 18, col 11, \'url\' is defined but never used.\ncomponents/file-upload.js: line 9, col 18, \'$\' is not defined.\ncomponents/file-upload.js: line 10, col 25, \'Ember\' is not defined.\ncomponents/file-upload.js: line 25, col 10, \'Ember\' is not defined.\n\n6 errors');
+  });
+});
 define('motoshare-client/tests/components/nav-bar.jshint', ['exports'], function (exports) {
   'use strict';
 
   QUnit.module('JSHint | components/nav-bar.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'components/nav-bar.js should pass jshint.');
+    assert.ok(false, 'components/nav-bar.js should pass jshint.\ncomponents/nav-bar.js: line 32, col 38, Missing semicolon.\ncomponents/nav-bar.js: line 28, col 13, \'$\' is not defined.\n\n2 errors');
+  });
+});
+define('motoshare-client/tests/controllers/app.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | controllers/app.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'controllers/app.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/controllers/app/addmotorcycle.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | controllers/app/addmotorcycle.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'controllers/app/addmotorcycle.js should pass jshint.\ncontrollers/app/addmotorcycle.js: line 38, col 30, Expected \'}\' to match \'{\' from line 31 and instead saw \'function\'.\ncontrollers/app/addmotorcycle.js: line 38, col 38, Bad invocation.\ncontrollers/app/addmotorcycle.js: line 38, col 40, Expected \'}\' to match \'{\' from line 3 and instead saw \'{\'.\ncontrollers/app/addmotorcycle.js: line 39, col 13, Expected \')\' and instead saw \'var\'.\ncontrollers/app/addmotorcycle.js: line 39, col 16, Missing semicolon.\ncontrollers/app/addmotorcycle.js: line 62, col 33, Missing semicolon.\ncontrollers/app/addmotorcycle.js: line 81, col 17, Forgotten \'debugger\' statement?\ncontrollers/app/addmotorcycle.js: line 83, col 15, Unrecoverable syntax error. (94% scanned).\n\n8 errors');
+  });
+});
+define('motoshare-client/tests/controllers/app/profile.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | controllers/app/profile.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'controllers/app/profile.js should pass jshint.');
   });
 });
 define('motoshare-client/tests/controllers/application.jshint', ['exports'], function (exports) {
@@ -70,13 +106,31 @@ define('motoshare-client/tests/controllers/login.jshint', ['exports'], function 
     assert.ok(true, 'controllers/login.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/controllers/motorcycle.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | controllers/motorcycle.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'controllers/motorcycle.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/controllers/motorcycle/index.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | controllers/motorcycle/index.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'controllers/motorcycle/index.js should pass jshint.\ncontrollers/motorcycle/index.js: line 14, col 39, \'e\' is defined but never used.\n\n1 error');
+  });
+});
 define('motoshare-client/tests/controllers/motorcycles.jshint', ['exports'], function (exports) {
   'use strict';
 
   QUnit.module('JSHint | controllers/motorcycles.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'controllers/motorcycles.js should pass jshint.');
+    assert.ok(false, 'controllers/motorcycles.js should pass jshint.\ncontrollers/motorcycles.js: line 46, col 38, Missing semicolon.\ncontrollers/motorcycles.js: line 42, col 13, \'$\' is not defined.\n\n2 errors');
   });
 });
 define('motoshare-client/tests/controllers/passwordreset.jshint', ['exports'], function (exports) {
@@ -86,15 +140,6 @@ define('motoshare-client/tests/controllers/passwordreset.jshint', ['exports'], f
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'controllers/passwordreset.js should pass jshint.');
-  });
-});
-define('motoshare-client/tests/controllers/profile.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | controllers/profile.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'controllers/profile.js should pass jshint.');
   });
 });
 define('motoshare-client/tests/controllers/register.jshint', ['exports'], function (exports) {
@@ -399,6 +444,43 @@ define('motoshare-client/tests/integration/components/cycle-pin-test.jshint', ['
     assert.ok(true, 'integration/components/cycle-pin-test.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/integration/components/file-upload-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleForComponent)('file-upload', 'Integration | Component | file upload', {
+    integration: true
+  });
+
+  (0, _emberQunit.test)('it renders', function (assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+
+    this.render(Ember.HTMLBars.template({
+      'id': '87daURWc',
+      'block': '{"statements":[["append",["unknown",["file-upload"]],false]],"locals":[],"named":[],"yields":[],"blocks":[],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), '');
+
+    // Template block usage:
+    this.render(Ember.HTMLBars.template({
+      'id': 'P8D2pida',
+      'block': '{"statements":[["text","\\n"],["block",["file-upload"],null,null,0],["text","  "]],"locals":[],"named":[],"yields":[],"blocks":[{"statements":[["text","      template block text\\n"]],"locals":[]}],"hasPartials":false}',
+      'meta': {}
+    }));
+
+    assert.equal(this.$().text().trim(), 'template block text');
+  });
+});
+define('motoshare-client/tests/integration/components/file-upload-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | integration/components/file-upload-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'integration/components/file-upload-test.js should pass jshint.');
+  });
+});
 define('motoshare-client/tests/integration/components/nav-bar-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleForComponent)('nav-bar', 'Integration | Component | nav bar', {
@@ -463,6 +545,42 @@ define('motoshare-client/tests/router.jshint', ['exports'], function (exports) {
     assert.ok(true, 'router.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/routes/app.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/app.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/app.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/routes/app/addmotorcycle.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/app/addmotorcycle.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/app/addmotorcycle.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/routes/app/mymotorcycles.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/app/mymotorcycles.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/app/mymotorcycles.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/routes/app/profile.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/app/profile.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/app/profile.js should pass jshint.');
+  });
+});
 define('motoshare-client/tests/routes/application.jshint', ['exports'], function (exports) {
   'use strict';
 
@@ -481,13 +599,58 @@ define('motoshare-client/tests/routes/login.jshint', ['exports'], function (expo
     assert.ok(true, 'routes/login.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/routes/motorcycle.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/motorcycle.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/motorcycle.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/routes/motorcycle/edit.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/motorcycle/edit.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/motorcycle/edit.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/routes/motorcycle/index.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/motorcycle/index.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/motorcycle/index.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/routes/motorcycle/rental.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/motorcycle/rental.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/motorcycle/rental.js should pass jshint.');
+  });
+});
 define('motoshare-client/tests/routes/motorcycles.jshint', ['exports'], function (exports) {
   'use strict';
 
   QUnit.module('JSHint | routes/motorcycles.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/motorcycles.js should pass jshint.');
+    assert.ok(false, 'routes/motorcycles.js should pass jshint.\nroutes/motorcycles.js: line 7, col 13, \'_this\' is defined but never used.\n\n1 error');
+  });
+});
+define('motoshare-client/tests/routes/not-found.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | routes/not-found.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/not-found.js should pass jshint.');
   });
 });
 define('motoshare-client/tests/routes/passwordreset.jshint', ['exports'], function (exports) {
@@ -499,15 +662,6 @@ define('motoshare-client/tests/routes/passwordreset.jshint', ['exports'], functi
     assert.ok(true, 'routes/passwordreset.js should pass jshint.');
   });
 });
-define('motoshare-client/tests/routes/profile.jshint', ['exports'], function (exports) {
-  'use strict';
-
-  QUnit.module('JSHint | routes/profile.js');
-  QUnit.test('should pass jshint', function (assert) {
-    assert.expect(1);
-    assert.ok(true, 'routes/profile.js should pass jshint.');
-  });
-});
 define('motoshare-client/tests/routes/register.jshint', ['exports'], function (exports) {
   'use strict';
 
@@ -515,6 +669,15 @@ define('motoshare-client/tests/routes/register.jshint', ['exports'], function (e
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'routes/register.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/services/popup.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | services/popup.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'services/popup.js should pass jshint.\nservices/popup.js: line 5, col 9, \'jQuery\' is not defined.\n\n1 error');
   });
 });
 define('motoshare-client/tests/test-helper', ['exports', 'motoshare-client/tests/helpers/resolver', 'motoshare-client/tests/helpers/responsive', 'ember-qunit'], function (exports, _motoshareClientTestsHelpersResolver, _motoshareClientTestsHelpersResponsive, _emberQunit) {
@@ -561,6 +724,50 @@ define('motoshare-client/tests/unit/adapters/application-test.jshint', ['exports
     assert.ok(true, 'unit/adapters/application-test.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/unit/controllers/app-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('controller:app', 'Unit | Controller | app', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('motoshare-client/tests/unit/controllers/app-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/controllers/app-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/app-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/controllers/app/addmotorcycle-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('controller:app/addmotorcycle', 'Unit | Controller | app/addmotorcycle', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('motoshare-client/tests/unit/controllers/app/addmotorcycle-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/controllers/app/addmotorcycle-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/app/addmotorcycle-test.js should pass jshint.');
+  });
+});
 define('motoshare-client/tests/unit/controllers/application-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('controller:application', 'Unit | Controller | application', {
@@ -603,6 +810,72 @@ define('motoshare-client/tests/unit/controllers/login-test.jshint', ['exports'],
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/controllers/login-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/controllers/motorcycle-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('controller:motorcycle', 'Unit | Controller | motorcycle', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('motoshare-client/tests/unit/controllers/motorcycle-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/controllers/motorcycle-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/motorcycle-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/controllers/motorcycle.index-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('controller:motorcycle.index', 'Unit | Controller | motorcycle.index', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('motoshare-client/tests/unit/controllers/motorcycle.index-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/controllers/motorcycle.index-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/motorcycle.index-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/controllers/motorcycle/index-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('controller:motorcycle/index', 'Unit | Controller | motorcycle/index', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('motoshare-client/tests/unit/controllers/motorcycle/index-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/controllers/motorcycle/index-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/motorcycle/index-test.js should pass jshint.');
   });
 });
 define('motoshare-client/tests/unit/controllers/motorcycles-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
@@ -734,6 +1007,48 @@ define('motoshare-client/tests/unit/models/motorcycle-test.jshint', ['exports'],
     assert.ok(true, 'unit/models/motorcycle-test.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/unit/routes/app-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:app', 'Unit | Route | app', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/app-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/app-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/app-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/routes/app/addmotorcycle-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:app/addmotorcycle', 'Unit | Route | app/addmotorcycle', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/app/addmotorcycle-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/app/addmotorcycle-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/app/addmotorcycle-test.js should pass jshint.');
+  });
+});
 define('motoshare-client/tests/unit/routes/application-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('route:application', 'Unit | Route | application', {
@@ -776,6 +1091,90 @@ define('motoshare-client/tests/unit/routes/login-test.jshint', ['exports'], func
     assert.ok(true, 'unit/routes/login-test.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/unit/routes/motorcycle-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:motorcycle', 'Unit | Route | motorcycle', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/motorcycle-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/motorcycle-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/motorcycle-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/routes/motorcycle/edit-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:motorcycle/edit', 'Unit | Route | motorcycle/edit', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/motorcycle/edit-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/motorcycle/edit-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/motorcycle/edit-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/routes/motorcycle/index-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:motorcycle/index', 'Unit | Route | motorcycle/index', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/motorcycle/index-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/motorcycle/index-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/motorcycle/index-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/routes/motorcycle/rental-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:motorcycle/rental', 'Unit | Route | motorcycle/rental', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/motorcycle/rental-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/motorcycle/rental-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/motorcycle/rental-test.js should pass jshint.');
+  });
+});
 define('motoshare-client/tests/unit/routes/motorcycles-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
 
   (0, _emberQunit.moduleFor)('route:motorcycles', 'Unit | Route | motorcycles', {
@@ -795,6 +1194,48 @@ define('motoshare-client/tests/unit/routes/motorcycles-test.jshint', ['exports']
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/motorcycles-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/routes/mymotorcycles-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:mymotorcycles', 'Unit | Route | mymotorcycles', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/mymotorcycles-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/mymotorcycles-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/mymotorcycles-test.js should pass jshint.');
+  });
+});
+define('motoshare-client/tests/unit/routes/not-found-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('route:not-found', 'Unit | Route | not found', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('motoshare-client/tests/unit/routes/not-found-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/routes/not-found-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/not-found-test.js should pass jshint.');
   });
 });
 define('motoshare-client/tests/unit/routes/passwordreset-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
@@ -860,10 +1301,31 @@ define('motoshare-client/tests/unit/routes/register-test.jshint', ['exports'], f
     assert.ok(true, 'unit/routes/register-test.js should pass jshint.');
   });
 });
+define('motoshare-client/tests/unit/services/popup-test', ['exports', 'ember-qunit'], function (exports, _emberQunit) {
+
+  (0, _emberQunit.moduleFor)('service:popup', 'Unit | Service | popup', {
+    // Specify the other units that are required for this test.
+    // needs: ['service:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var service = this.subject();
+    assert.ok(service);
+  });
+});
+define('motoshare-client/tests/unit/services/popup-test.jshint', ['exports'], function (exports) {
+  'use strict';
+
+  QUnit.module('JSHint | unit/services/popup-test.js');
+  QUnit.test('should pass jshint', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/services/popup-test.js should pass jshint.');
+  });
+});
 /* jshint ignore:start */
 
 require('motoshare-client/tests/test-helper');
 EmberENV.TESTS_FILE_LOADED = true;
 
 /* jshint ignore:end */
-//# sourceMappingURL=tests.map

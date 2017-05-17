@@ -1,5 +1,21 @@
+/* @imports must appear at top of stylesheet to be valid CSS */
+/*@import 'site.css';
+*/
+/* Any CSS rules must go *after* any @imports */
+.appBody{
+  padding-top: 50px;
+}
+.bumpdown{
+  padding-top: 10px;
+}
+.globalpadding{
+  margin: 10px 10px 10px 10px;
+}
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
     outline: 0;
+}
+.mousey{
+  cursor: pointer;
 }
 .site {
 	display: flex;
@@ -42,6 +58,16 @@
   -o-background-size: cover;
   background-size: cover;
 }
+.notfoundBG {
+  background: url('/assets/images/404BG.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.grey{
+  background-color: grey;
+}
 .content {
   display: flex;
   display:-webkit-flex;
@@ -51,6 +77,13 @@
   align-items: center;
   -webkit-justify-content: center;
   justify-content: center;
+}
+/*Text styles */
+.text-yellow {
+  color: #f0ad4e;
+}
+.text-yellow:hover{
+  color: #ca8e3a;
 }
 .btn-white-outline { 
   color: #fff; 
@@ -146,7 +179,7 @@ fieldset[disabled] .btn-white-outline.active {
 	color: #000;
 }
 .map-canvas{
-    height: 95vh;
+    height: 100vh;
   }
 /*Main Navigation*/
 .navbar{
@@ -178,4 +211,126 @@ fieldset[disabled] .btn-white-outline.active {
 }
 .login-form-mobile h4{
   color: #fff;
+}
+/* Google maps related Styles  */
+.iw-container .iw-title {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  padding: 10px;
+  background-color: #fff;
+  color: #000;
+  margin: 0;
+  border-radius: 2px 2px 0 0;
+}
+/*Burger Menu*/
+.bm-menu{
+  background-color: #4a4a4a;
+  background: url('/assets/images/noise.png');
+  padding-left: 0px;
+}
+.bm-menu a{
+  color: #fff;
+  text-decoration: none;
+}
+.bm-menu a:hover{
+  color: #ffb938;
+  text-decoration: none;
+}
+.ember-burger-menu .bm-menu h2 {
+    margin: 0;
+    padding: .5em;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(0,0,0,.1);
+    font-size: 2em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.ember-burger-menu .bm-menu li {
+    margin: 0;
+    padding: .5em;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(0,0,0,.1);
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    list-style: none;
+}
+.fourohfour{
+  color: #fff;
+}
+.add-bike{
+  padding-right: 25px;
+}
+.add-bike button{ position: fixed; bottom: 25px; right: 25px; }
+.caption a {
+  color: #e81001e;
+  text-decoration: none;
+}
+.caption a:hover,
+.caption a:focus {
+  color: #ad6f17;
+  text-decoration: none;
+}
+.file-input-wrapper {
+    width: 200px;
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+}
+.file-input-wrapper > input[type="file"] {
+    font-size: 200px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+}
+.file-input-wrapper > .btn-file-input {
+    display: inline-block;
+    width: 200px;
+    height: 40px;
+}
+.file-input-wrapper:hover > .btn-file-input {
+    background-color: #aaa;
+}
+.loading-container {
+  width: 100vh;
+  height: 100vh;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+
+  align-items: center;
+}
+.splash{
+  margin-top: 20%;
+}
+
+/*Mobile Navbar styles */
+.mobilebar {
+  background: #eeeeee;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  position: relative;
+  width: 100%;
+}
+
+.mobilebaritem {
+
+}
+.mobilebar a {
+  color: #777777;
+}
+.btn-mobilebar {
+  background-color: #eeeeee;
+  border-color: #eeeeee;
 }
