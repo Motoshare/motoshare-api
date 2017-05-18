@@ -12,7 +12,7 @@ import stripe
 import sys
 if '__main__' not in sys.modules:
     sys.modules['__main__'] = sys.modules[__name__]
-#Stripe Info 
+#Stripe Info be sure to switch to dev key for testing.
 stripe.api_key = 'sk_test_336YZRu9JqOdtpk8zBycR5BK'
 
 app = Flask(__name__)
